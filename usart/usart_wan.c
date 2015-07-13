@@ -92,7 +92,7 @@ void wan_usart_transmit_bytes(char data[], int size)
 
 void wan_usart_transmit_string(char * data)
 {
-	unsigned char c = *data;
+	unsigned char *c = *data;
 
 	while (c)
 	{
@@ -104,7 +104,7 @@ void wan_usart_transmit_string(char * data)
 }
 
 
-ISR(WAN_ISR_VECTOR)
+/*ISR(WAN_ISR_VECTOR)
 {
 	char * data = UDR0;
 	//if (btle_rx_cb != 0) btle_rx_cb(data);
@@ -112,4 +112,4 @@ ISR(WAN_ISR_VECTOR)
 
 //		//PORTD ^= _BV(PD7);
 
-}
+}*/

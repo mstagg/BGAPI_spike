@@ -11,7 +11,7 @@
 typedef void (*btle_rx_cb_t)(uint8_t);
 typedef void (*btle_out_cb_t)(uint8_t);
 
-#define BTLE_RX_BUFFER_SIZE 	512
+#define BTLE_RX_BUFFER_SIZE 	50
 #define BTLE_ISR_VECTOR			USART1_RX_vect
 
 typedef struct
