@@ -8,6 +8,7 @@
  */
 
 #define F_CPU		8000000
+#define PRINT_BUFFER_SIZE 256
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -20,14 +21,10 @@
 #include "usart/usart_wan.h"
 #include "wan/wan_driver.h"
 #include "wan/wan.h"
+#include "packet_parser.h"
+#include "state_manager.h"
 
-uint8_t state = 0;
-volatile unsigned char data;
-volatile unsigned char len;
-volatile unsigned char msg[256];
-volatile unsigned char msgIndex = 0;
-
-void main()
+int main()
 {
 	// Init Events...
 	sei();
@@ -35,7 +32,8 @@ void main()
 	// set portD bit 5 (flow control) as output
 	DDRD |= _BV(PD5);
 
-	// USART setup
+	// Initial setup
+	init_state_machine();
 	btle_usart_init();
 	wan_usart_init();
 	// Open flow control
@@ -55,23 +53,28 @@ void main()
 	_delay_ms(100);
 	btle_usart_transmit_bytes(discoverCmd, 5);
 
+	char c[PRINT_BUFFER_SIZE];
 	while(true)
 	{
 		if (state == 5) {
 			// Close flow control
 			PORTD |= _BV(PD5);
 
-			// Store into string and transmit MAC address of advertiser
-			char *c = malloc(sizeof(*c));
-			sprintf(c, "MSG FROM: %02x:%02x:%02x:%02x:%02x:%02x -> ", msg[2], msg[3], msg[4], msg[5], msg[6], msg[7]);
-			wan_usart_transmit_string(c);
+			PACKAGE *pkg = parse(msg);
 
-			// Store into string and transmit data payload
-			int i;
-			for(i = 10; i < msgIndex; i++){
-				sprintf(c, "%02X ", msg[i]);
-				wan_usart_transmit_string(c);
-			}
+			get_address_string(pkg, c);
+			wan_usart_transmit_string("Address: ");
+			wan_usart_transmit_string(c);
+			wan_usart_transmit_string("\r\n");
+
+			get_data_length_string(pkg, c);
+			wan_usart_transmit_string("Data Length: ");
+			wan_usart_transmit_string(c);
+			wan_usart_transmit_string("\r\n");
+
+			get_data_string(pkg, c);
+			wan_usart_transmit_string("Data: ");
+			wan_usart_transmit_string(c);
 			wan_usart_transmit_string("\r\n\n");
 
 			//To transmit raw hex data of entire message... uncomment
@@ -79,45 +82,20 @@ void main()
 
 			msgIndex = 0;
 			state = 0;
-			free(c);
+			free(pkg);
 
 			//Open flow control
 			PORTD &= ~_BV(PD5);
 		}
 	}
+	return 0;
 }
 
 // Event: Received byte over bluetooth UART
 // Manages state machine
 ISR(USART1_RX_vect){
 	data = UDR1;
-
-	// Each legitimate advertisement packet has prefix {0x80, MSG_SIZE, 0x06, 0x00}
-	// Prefix is followed by data payload of size MSG_SIZE to complete advertisement packet
-	switch(state){
-		case 0:
-			state = (data == 0x80) ? 1 : 0;
-			break;
-		case 1:
-			len = data;
-			state = 2;
-			break;
-		case 2:
-			state = (data == 0x06) ? 3 : 0;
-			break;
-		case 3:
-			state = (data == 0x00) ? 4 : 0;
-			break;
-		case 4:
-			if(len > 0){
-				msg[msgIndex] = data;
-				msgIndex++;
-				len--;
-			} else{
-				state = 5;
-			}
-			break;
-	}
+	manage_state(data);
 }
 
 
