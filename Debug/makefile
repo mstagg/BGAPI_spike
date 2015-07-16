@@ -10,6 +10,8 @@ RM := rm -rf
 -include sources.mk
 -include wan/subdir.mk
 -include usart/subdir.mk
+-include parser/subdir.mk
+-include bgapi/subdir.mk
 -include subdir.mk
 -include objects.mk
 

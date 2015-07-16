@@ -23,5 +23,7 @@ S_UPPER_DEPS :=
 SUBDIRS := \
 wan \
 usart \
+parser \
 . \
+bgapi \
 
