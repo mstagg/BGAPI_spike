@@ -7,7 +7,7 @@
  *      Author: Matthew Stagg
  */
 
-#define F_CPU		8000000
+#define F_CPU 8000000
 #define PRINT_BUFFER_SIZE 256
 
 #include <avr/io.h>
@@ -51,6 +51,7 @@ int main(void)
 	for(;;)
 	{
 
+		// State and PACKAGE defined in parser/packet_parser
 		if (state == 5) {
 			// Close flow control
 			PORTD |= _BV(PD5);
@@ -86,6 +87,12 @@ int main(void)
 	return 0;
 }
 
+// Event: Received byte over bluetooth UART
+// Manages state machine
+ISR(USART1_RX_vect){
+	data = UDR1;
+	manage_state(data);
+}
 
 
 

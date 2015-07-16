@@ -25,6 +25,7 @@ void init_state_machine(void){
 	state = 0;
 }
 
+// Listen for correctly formatted advertisement preamble to come across line
 void manage_state(uint8_t data){
 	// Each legitimate advertisement packet has prefix {0x80, MSG_SIZE, 0x06, 0x00}
 	// Prefix is followed by data payload of size MSG_SIZE to complete advertisement packet
@@ -54,13 +55,7 @@ void manage_state(uint8_t data){
 	}
 }
 
-// Event: Received byte over bluetooth UART
-// Manages state machine
-ISR(USART1_RX_vect){
-	data = UDR1;
-	manage_state(data);
-}
-
+// Parse incoming message (WITHOUT PREAMBLE!) and store it in a PACKAGE struct
 PACKAGE* parse(uint8_t msg[]){
 	PACKAGE* pkg = malloc(sizeof(PACKAGE));
 

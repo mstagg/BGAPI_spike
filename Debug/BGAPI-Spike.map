@@ -413,42 +413,42 @@ END GROUP
  .text.manage_state
                 0x0000000000000a32       0xbc ./parser/packet_parser.o
                 0x0000000000000a32                manage_state
- .text.__vector_28
-                0x0000000000000aee       0x74 ./parser/packet_parser.o
-                0x0000000000000aee                __vector_28
- .text.parse    0x0000000000000b62      0x110 ./parser/packet_parser.o
-                0x0000000000000b62                parse
+ .text.parse    0x0000000000000aee      0x110 ./parser/packet_parser.o
+                0x0000000000000aee                parse
  .text.get_data_string
-                0x0000000000000c72       0xda ./parser/packet_parser.o
-                0x0000000000000c72                get_data_string
+                0x0000000000000bfe       0xda ./parser/packet_parser.o
+                0x0000000000000bfe                get_data_string
  .text.get_data_length_string
-                0x0000000000000d4c       0x92 ./parser/packet_parser.o
-                0x0000000000000d4c                get_data_length_string
+                0x0000000000000cd8       0x92 ./parser/packet_parser.o
+                0x0000000000000cd8                get_data_length_string
  .text.get_address_string
-                0x0000000000000dde      0x102 ./parser/packet_parser.o
-                0x0000000000000dde                get_address_string
+                0x0000000000000d6a      0x102 ./parser/packet_parser.o
+                0x0000000000000d6a                get_address_string
  .text.get_address_type_string
-                0x0000000000000ee0       0x92 ./parser/packet_parser.o
-                0x0000000000000ee0                get_address_type_string
+                0x0000000000000e6c       0x92 ./parser/packet_parser.o
+                0x0000000000000e6c                get_address_type_string
  .text.get_packet_type_string
-                0x0000000000000f72       0x92 ./parser/packet_parser.o
-                0x0000000000000f72                get_packet_type_string
+                0x0000000000000efe       0x92 ./parser/packet_parser.o
+                0x0000000000000efe                get_packet_type_string
  .text.get_rssi_string
-                0x0000000000001004       0x92 ./parser/packet_parser.o
-                0x0000000000001004                get_rssi_string
+                0x0000000000000f90       0x92 ./parser/packet_parser.o
+                0x0000000000000f90                get_rssi_string
  .text.get_bond_string
-                0x0000000000001096       0x92 ./parser/packet_parser.o
-                0x0000000000001096                get_bond_string
+                0x0000000000001022       0x92 ./parser/packet_parser.o
+                0x0000000000001022                get_bond_string
  .text.discover_response_listen
-                0x0000000000001128       0xe8 ./bgapi/bg_api.o
-                0x0000000000001128                discover_response_listen
+                0x00000000000010b4       0xe8 ./bgapi/bg_api.o
+                0x00000000000010b4                discover_response_listen
  .text.bg_api_discover_init
-                0x0000000000001210      0x40e ./bgapi/bg_api.o
-                0x0000000000001210                bg_api_discover_init
- .text.init     0x000000000000161e       0x44 ./main.o
-                0x000000000000161e                init
- .text.main     0x0000000000001662       0xe0 ./main.o
-                0x0000000000001662                main
+                0x000000000000119c      0x40e ./bgapi/bg_api.o
+                0x000000000000119c                bg_api_discover_init
+ .text.init     0x00000000000015aa       0x44 ./main.o
+                0x00000000000015aa                init
+ .text.main     0x00000000000015ee       0xe0 ./main.o
+                0x00000000000015ee                main
+ .text.__vector_28
+                0x00000000000016ce       0x74 ./main.o
+                0x00000000000016ce                __vector_28
  .text.libgcc.mul
                 0x0000000000001742       0x1e /usr/lib/gcc/avr/4.8.2/avr51/libgcc.a(_umulhisi3.o)
                 0x0000000000001742                __umulhisi3
@@ -799,12 +799,12 @@ END GROUP
                                         0x984 (size before relaxing)
  .stab          0x0000000000001d28      0x690 ./usart/usart_wan.o
                                         0x858 (size before relaxing)
- .stab          0x00000000000023b8      0xabc ./parser/packet_parser.o
-                                        0xce4 (size before relaxing)
- .stab          0x0000000000002e74      0x90c ./bgapi/bg_api.o
+ .stab          0x00000000000023b8      0xa80 ./parser/packet_parser.o
+                                        0xca8 (size before relaxing)
+ .stab          0x0000000000002e38      0x90c ./bgapi/bg_api.o
                                         0xad4 (size before relaxing)
- .stab          0x0000000000003780      0x54c ./main.o
-                                        0x858 (size before relaxing)
+ .stab          0x0000000000003744      0x588 ./main.o
+                                        0x894 (size before relaxing)
  .stab          0x0000000000003ccc       0x90 /usr/lib/gcc/avr/4.8.2/../../../avr/lib/avr51/libm.a(cmpsf2.o)
                                          0x9c (size before relaxing)
  .stab          0x0000000000003d5c      0x240 /usr/lib/gcc/avr/4.8.2/../../../avr/lib/avr51/libm.a(fixunssfsi.o)

@@ -26,7 +26,9 @@ uint8_t discoverParams[] = {0x00, 0x05, 0x06, 0x07, 0x40, 0x00, 0x32, 0x00, 0x00
 uint8_t discover_response_listen(void){
 	uint8_t checkState = 0;
 	uint8_t data;
+
 	int i;
+	// Only check first 20 bytes across the UART line
 	for(i = 0; i < 20; i++){
 		while ( !(UCSR1A & (1<<RXC1)) );
 		data = UDR1;
@@ -60,6 +62,7 @@ uint8_t discover_response_listen(void){
 
 void bg_api_discover_init(void){
 	cli();
+
 	// End any running discovery mode and start a new one
 	btle_usart_transmit_bytes(endDiscoverCmd, 4);
 	_delay_ms(500);
@@ -75,5 +78,6 @@ void bg_api_discover_init(void){
 		_delay_ms(500);
 		btle_usart_transmit_bytes(discoverCmd, 5);
 	}
+
 	sei();
 }
